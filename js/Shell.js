@@ -1,11 +1,16 @@
 function Shell(p) {
   this.p = p
   this.position = p.createVector(p.random(50, p.width - 50), p.height)
-  this.velocity = p.createVector(p.random(-0.2, 0.2), p.random(-6.75, -3.5))
+  const x = this.position.x
+  const randomX =
+    x < p.width * 0.33
+      ? p.random(0.1, 0.2)
+      : x > p.width * 0.66 ? p.random(-0.2, -0.1) : 0
+  const yVelScale = p.height / 100 + 1
+  this.velocity = p.createVector(randomX, p.random(-yVelScale, -3.5))
   this.gravity = p.createVector(0, 0.05)
   this.maxY = p.height
   this.alpha = p.random(1)
-  // console.log(this.velocity.y)
 }
 
 Shell.prototype.remove = function() {
