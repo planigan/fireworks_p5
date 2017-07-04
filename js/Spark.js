@@ -12,15 +12,13 @@ function Spark(p, position, color) {
 }
 
 Spark.prototype.remove = function() {
-  const done =
+  // remove if off the canvas or timed out
+  return (
     this.position.y > this.maxY ||
     this.position.x < 0 ||
     this.position.x > this.maxX ||
     this.framesLeft <= 0
-  if (done && debug) {
-    console.log(this.position.y, this.velocity.x, this.velocity.y)
-  }
-  return done
+  )
 }
 
 Spark.prototype.update = function() {
@@ -30,11 +28,14 @@ Spark.prototype.update = function() {
 }
 
 Spark.prototype.render = function() {
-  if (this.position.y < this.maxY) {
-    const p = this.p
-    const alpha = this.framesLeft / this.lifespan
-    const newColor = p.color(p.hue(this.color), 100, 100, alpha)
-    p.fill(newColor)
-    p.ellipse(this.position.x, this.position.y, 4, 4)
-  }
+  const p = this.p
+  const alpha = this.framesLeft / this.lifespan
+  const newColor = p.color(
+    p.hue(this.color),
+    p.saturation(this.color),
+    100,
+    alpha
+  )
+  p.fill(newColor)
+  p.ellipse(this.position.x, this.position.y, 4, 4)
 }
